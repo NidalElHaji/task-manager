@@ -10,13 +10,11 @@ const API_URL = `${import.meta.env.VITE_API_URL}/tasks`;
 
 const getTasks = async () => {
     const data = await getRequest(`${API_URL}`);
-
     return data;
 };
 
 const createTask = async (task: Task) => {
     const data = await postRequest(`${API_URL}`, task);
-
     return data;
 };
 

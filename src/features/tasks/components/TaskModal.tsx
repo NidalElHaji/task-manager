@@ -92,7 +92,7 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
                     name="title"
                     defaultValue={task?.title || ""}
                     isInvalid={invalidFields.includes("title")}
-                    autoFocus={true}
+                    autofocus={true}
                 />
                 <InputLabel
                     id="description"
