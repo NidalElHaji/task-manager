@@ -18,7 +18,7 @@ const RecruitersHomePage = () => {
                 <Card className="bg-white shadow-md rounded-lg p-6 mb-8">
                     <Card.Header>
                         <Card.Title className="text-2xl font-semibold text-blue-800">
-                            For Recruiters
+                            For Technical Interviewer
                         </Card.Title>
                     </Card.Header>
                     <Card.Content className="text-gray-700">
@@ -34,10 +34,10 @@ const RecruitersHomePage = () => {
                         </ul>
                         <p className="mb-6">
                             I have built this platform to demonstrate my
-                            capabilities in modern frontend and backend
-                            development, focusing on user-friendly design and
-                            functionality. Please review my work and reach out
-                            with any questions or feedback.
+                            capabilities in modern front-end development,
+                            focusing on user-friendly design and functionality.
+                            Please review my work and reach out with any
+                            questions or feedback.
                         </p>
                         <div className="flex justify-center gap-4">
                             <a
