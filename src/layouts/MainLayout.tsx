@@ -7,10 +7,10 @@ const MainLayout = () => {
     return (
         <>
             <Header></Header>
-            <main className="flex bg-blue-50 w-screen h-screen">
+            <main className="flex min-h-screen min-w-auto bg-blue-50">
                 <Sidebar />
-                <div className="flex-1">
-                    <div className=" w-4/5 m-auto mt-16">
+                <div className="flex-1 pt-10 md:pt-6 md:ml-72 overflow-hidden">
+                    <div className=" md:w-4/5 md:m-auto md:mt-16">
                         <Outlet />
                     </div>
                 </div>

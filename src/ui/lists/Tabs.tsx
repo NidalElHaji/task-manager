@@ -6,7 +6,7 @@ const Tabs: FC<{ children: ReactNode }> & {
     ItemBadge: typeof Badge;
 } = ({ children }) => {
     return (
-        <menu className="flex gap-4 mb-4" role="tablist">
+        <menu className="flex gap-1 md:gap-4 mb-4" role="tablist">
             {children}
         </menu>
     );
