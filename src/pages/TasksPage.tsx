@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useSelector } from "react-redux";
 
@@ -11,69 +11,34 @@ import SearchBox from "../ui/input/SearchBox";
 import { RootState } from "../types";
 import { filterTaskList } from "../features/tasks/utils/taskUtils";
 import { DROPDOWN_SEARCH_LIST } from "../utils/utils";
+import { useSearchAndFilter } from "../hooks/useSearchAndFilter";
 
 const TasksPage = () => {
     const [selectedStatus, setSelectedStatus] = useState<TaskStatus>("active");
-    const [isCreatingNewTask, setIsCreatingNewTask] = useState<boolean>(false);
-    const [dropboxValue, setDropboxValue] = useState<string>(
-        DROPDOWN_SEARCH_LIST[0].value,
-    );
-    const [searchValue, setSearchValue] = useState<string>("");
-    const [displayTasks, setDisplayTasks] = useState<Task[]>([]);
+    const [isCreatingNewTask, setIsCreatingNewTask] = useState(false);
 
     const taskList: Task[] = useSelector(
-        (state: RootState) => state.task.taskList,
+        (state: RootState) => state.task.taskList || [],
     );
 
-    useEffect(() => {
-        const filteredTaskList = filterTaskList(taskList);
-        const displayFilterTasks = filteredTaskList[selectedStatus] || [];
+    const filteredTasks = useMemo(() => {
+        const filtered = filterTaskList(taskList);
+        return filtered[selectedStatus] || [];
+    }, [taskList, selectedStatus]);
 
-        setDisplayTasks(() => displayFilterTasks);
-    }, [selectedStatus, taskList]);
+    const {
+        searchConfig,
+        handleSearchChange,
+        handleSearch,
+        filteredItems: displayTasks,
+    } = useSearchAndFilter<Task>(
+        filteredTasks,
+        ["title", "description"],
+        DROPDOWN_SEARCH_LIST[0].value,
+    );
 
-    function handleStartAddNewTask() {
-        setIsCreatingNewTask(true);
-    }
-
-    function handleDoneAddNewTask() {
-        setIsCreatingNewTask(false);
-    }
-
-    const onDropboxChange = (value: string) => {
-        setDropboxValue(value);
-    };
-
-    const onInputChange = (value: string) => {
-        setSearchValue(value);
-    };
-
-    const onSearch = () => {
-        const filteredTaskList = filterTaskList(taskList);
-        const displayFilterTasks = filteredTaskList[selectedStatus] || [];
-
-        if (searchValue.trim() === "") {
-            setDisplayTasks(displayFilterTasks);
-        } else {
-            setDisplayTasks(
-                displayTasks.filter((task: Task) => {
-                    if (dropboxValue === "description") {
-                        return task.description
-                            .toLowerCase()
-                            .includes(searchValue.toLowerCase());
-                    }
-                    if (dropboxValue === "title") {
-                        return task.title
-                            .toLowerCase()
-                            .includes(searchValue.toLowerCase());
-                    }
-                    return false;
-                }),
-            );
-        }
-
-        console.log(displayTasks);
-    };
+    const handleStartAddNewTask = () => setIsCreatingNewTask(true);
+    const handleDoneAddNewTask = () => setIsCreatingNewTask(false);
 
     return (
         <>
@@ -90,16 +55,24 @@ const TasksPage = () => {
                     <h2 className="text-2xl font-semibold text-gray-800 mb-6">
                         Tasks
                     </h2>
-                    <Button type="button" onClick={handleStartAddNewTask}>
+                    <Button
+                        type="button"
+                        onClick={handleStartAddNewTask}
+                        aria-label="Add Task"
+                    >
                         Add Task
                     </Button>
                 </div>
                 <div className="w-full flex mx-auto mt-8 pb-6">
                     <SearchBox
-                        onDropboxChange={onDropboxChange}
-                        onInputChange={onInputChange}
-                        onSearch={onSearch}
-                        searchValue={searchValue}
+                        onDropboxChange={(value) =>
+                            handleSearchChange("dropboxValue", value)
+                        }
+                        onInputChange={(value) =>
+                            handleSearchChange("searchValue", value)
+                        }
+                        onSearch={handleSearch}
+                        searchValue={searchConfig.searchValue}
                     />
                 </div>
                 <TaskTabs

@@ -6,6 +6,6 @@ export const formatDate = (date: string) =>
     });
 
 export const DROPDOWN_SEARCH_LIST = Object.freeze([
-    { label: "title", value: "title" },
-    { label: "description", value: "description" },
+    { label: "Title", value: "title" },
+    { label: "Description", value: "description" },
 ]);

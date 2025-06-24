@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, RefObject } from "react";
 import Label from "./Label";
 import Input from "./Input";
 
@@ -7,6 +7,10 @@ type InputLabelProps = {
     name: string;
     type: string;
     isInvalid?: boolean;
+    id?: string;
+    ref?: RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
+    defaultValue?: string;
+    autoFocus?: boolean;
 };
 
 const InputLabel: FC<InputLabelProps> = ({
