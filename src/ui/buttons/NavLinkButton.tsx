@@ -2,10 +2,10 @@ import { FC, ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const NavLinkButton: FC<{ to: string; children: ReactNode }> = ({
-    to,
-    children,
-}) => {
+const NavLinkButton: FC<{
+    to: string;
+    children: ReactNode;
+}> = ({ to, children }) => {
     return (
         <NavLink
             to={to}
@@ -20,7 +20,9 @@ const NavLinkButton: FC<{ to: string; children: ReactNode }> = ({
                     {isActive && (
                         <motion.div
                             layoutId="hover-indicator"
-                            className="absolute inset-0 bg-gray-700 rounded-md"
+                            className={
+                                "absolute inset-0 rounded-md bg-gray-700"
+                            }
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}

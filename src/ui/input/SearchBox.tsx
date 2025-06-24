@@ -4,6 +4,7 @@ import Button from "../buttons/Button";
 import Dropdown from "./Dropdown";
 import Input from "./Input";
 import { DROPDOWN_SEARCH_LIST } from "../../utils/utils";
+import { Search } from "lucide-react";
 
 type SearchBoxProps = {
     searchValue: string;
@@ -47,12 +48,12 @@ const SearchBox: FC<SearchBoxProps> = ({
                 aria-describedby="searchbox"
             />
             <Button
-                className="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="px-4 py-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 type="button"
                 onClick={onSearch}
                 aria-label="Execute search"
             >
-                <i className="bi bi-search"></i>
+                <Search />
             </Button>
         </div>
     );

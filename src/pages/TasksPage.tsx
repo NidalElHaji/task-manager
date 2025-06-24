@@ -15,6 +15,8 @@ import TaskModal from "../features/tasks/components/TaskModal";
 import Button from "../ui/buttons/Button";
 import { CLASSES_PAGE_BODY, CLASSES_PAGE_TITLE } from "../utils/classes";
 import SearchBox from "../ui/input/SearchBox";
+import LoadingPage from "./LoadingPage";
+import ErrorPage from "./ErrorPage";
 
 const TasksPage: FC = () => {
     const [selectedStatus, setSelectedStatus] = useState<TaskStatus>("active");
@@ -47,21 +49,11 @@ const TasksPage: FC = () => {
     const toggleModal = () => setIsModalOpen((prev) => !prev);
 
     if (isLoading) {
-        return (
-            <div className="flex justify-center items-center min-h-64">
-                <div className="text-lg text-gray-500">Loading tasks...</div>
-            </div>
-        );
+        return <LoadingPage />;
     }
 
     if (error) {
-        return (
-            <div className="flex justify-center items-center min-h-64">
-                <div className="text-lg text-red-500">
-                    Error loading tasks. Please try refreshing the page.
-                </div>
-            </div>
-        );
+        return <ErrorPage />;
     }
 
     return (

@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { JSX, useState } from "react";
+import { House, ListChecks, Menu, X } from "lucide-react";
 
 import NavLinkButton from "../buttons/NavLinkButton";
 
-const NAV_LINKS: readonly { to: string; text: string }[] = Object.freeze([
-    { to: "/", text: "Dashboard" },
-    { to: "tasks", text: "Tasks" },
-]);
+const NAV_LINKS: readonly { to: string; text: string; icon: JSX.Element }[] =
+    Object.freeze([
+        { to: "/", text: "Home", icon: <House /> },
+        { to: "tasks", text: "Tasks", icon: <ListChecks /> },
+    ]);
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +37,10 @@ const Sidebar = () => {
                         {NAV_LINKS.map((link) => (
                             <li key={link.text}>
                                 <NavLinkButton to={link.to}>
-                                    {link.text}
+                                    <span className="flex items-center space-x-2">
+                                        <span>{link.icon}</span>
+                                        <span>{link.text}</span>
+                                    </span>
                                 </NavLinkButton>
                             </li>
                         ))}

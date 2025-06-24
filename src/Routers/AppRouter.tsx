@@ -3,10 +3,10 @@ import { Suspense } from "react";
 
 import MainLayout from "../layouts/MainLayout";
 import ErrorPage from "../pages/ErrorPage";
-import DashboardPage from "../pages/DashboardPage";
 import TasksPage from "../pages/TasksPage";
 import { tasksLoader } from "../pages/handlers/tasksPage.handler";
 import LoadingPage from "../pages/LoadingPage";
+import RecruitersHomePage from "../pages/RecruitersHomePage";
 
 const router = createBrowserRouter([
     {
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
         element: <MainLayout />,
         errorElement: <ErrorPage />,
         children: [
-            { index: true, element: <DashboardPage /> },
+            { index: true, element: <RecruitersHomePage /> },
             {
                 path: "tasks",
                 element: (
