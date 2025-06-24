@@ -1,9 +1,11 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 
 type DropdownProps = {
     options:
         | readonly { label: string | number; value: string | number }[]
         | { label: string | number; value: string | number }[];
+    className?: string;
+    onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const Dropdown: FC<DropdownProps> = ({ options, ...props }) => {

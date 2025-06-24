@@ -1,8 +1,17 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 
 type InputProps = {
     type: string;
-    isInvalid: boolean;
+    isInvalid?: boolean;
+    id?: string;
+    className?: string;
+    name?: string;
+    placeholder?: string;
+    value?: string;
+    onChange?: (
+        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => void;
+    "aria-describedby"?: string;
 };
 
 const Input: FC<InputProps> = ({ type, isInvalid, ...props }) => {

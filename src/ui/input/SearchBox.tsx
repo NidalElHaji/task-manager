@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 
 import Button from "../buttons/Button";
 import Dropdown from "./Dropdown";
@@ -18,13 +18,13 @@ const SearchBox: FC<SearchBoxProps> = ({
     onDropboxChange,
     onSearch,
 }) => {
-    const handleDropdownChange = (
-        event: React.ChangeEvent<HTMLSelectElement>,
-    ) => {
+    const handleDropdownChange = (event: ChangeEvent<HTMLSelectElement>) => {
         onDropboxChange(event.target.value);
     };
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (
+        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
         onInputChange(event.target.value);
     };
 
