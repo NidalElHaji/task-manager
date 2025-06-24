@@ -4,7 +4,11 @@ import { useDispatch } from "react-redux";
 
 import { Task, TaskStatus } from "../types/TaskTypes";
 import { formatDate } from "../../../utils/utils";
-import { deleteTaskData, updateTaskData } from "../store/taskActions";
+import {
+    useUpdateTaskMutation,
+    useDeleteTaskMutation,
+} from "../hooks/useTasks";
+import { taskActions } from "../store/taskReducer";
 import { AppDispatch } from "../../../types";
 import TaskModal from "./TaskModal";
 import Button from "../../../ui/buttons/Button";
@@ -34,6 +38,8 @@ const TaskListItemView: FC<TaskListItemViewProps> = ({ task }) => {
     const [isEditing, setIsEditing] = useState(false);
 
     const dispatch = useDispatch<AppDispatch>();
+    const updateTaskMutation = useUpdateTaskMutation();
+    const deleteTaskMutation = useDeleteTaskMutation();
 
     const filteredStatusButtons = statusButtons.filter(
         ({ status }) => task.status !== status,
@@ -41,13 +47,29 @@ const TaskListItemView: FC<TaskListItemViewProps> = ({ task }) => {
 
     const handleChangeStatus = (status: TaskStatus) => {
         if (task.status !== status) {
-            dispatch(updateTaskData({ ...task, status }));
+            const updatedTask = { ...task, status };
+
+            dispatch(
+                taskActions.updateTask({ id: task.id!, task: updatedTask }),
+            );
+
+            updateTaskMutation.mutate(updatedTask, {
+                onError: () => {
+                    dispatch(taskActions.updateTask({ id: task.id!, task }));
+                },
+            });
         }
     };
 
     const handleDelete = () => {
         if (window.confirm("Are you sure you want to delete this task?")) {
-            dispatch(deleteTaskData(task.id!));
+            dispatch(taskActions.deleteTask({ id: task.id! }));
+
+            deleteTaskMutation.mutate(task.id!, {
+                onError: () => {
+                    dispatch(taskActions.createTask({ task }));
+                },
+            });
         }
     };
 
@@ -89,6 +111,7 @@ const TaskListItemView: FC<TaskListItemViewProps> = ({ task }) => {
                         onClick={toggleEditing}
                         type="button"
                         className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-500"
+                        disabled={updateTaskMutation.isPending}
                     >
                         <i className="bi bi-pencil"></i>
                     </Button>
@@ -96,6 +119,7 @@ const TaskListItemView: FC<TaskListItemViewProps> = ({ task }) => {
                         onClick={handleDelete}
                         type="button"
                         className="px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-500"
+                        disabled={deleteTaskMutation.isPending}
                     >
                         <i className="bi bi-trash"></i>
                     </Button>
@@ -108,7 +132,12 @@ const TaskListItemView: FC<TaskListItemViewProps> = ({ task }) => {
                             <button
                                 key={status}
                                 onClick={() => handleChangeStatus(status)}
-                                className={color}
+                                className={`${color} ${
+                                    updateTaskMutation.isPending
+                                        ? "opacity-50 cursor-not-allowed"
+                                        : ""
+                                }`}
+                                disabled={updateTaskMutation.isPending}
                             >
                                 {label}
                             </button>

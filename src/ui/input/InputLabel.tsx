@@ -11,6 +11,7 @@ type InputLabelProps = {
     ref?: RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
     defaultValue?: string;
     autoFocus?: boolean;
+    disabled?: boolean;
 };
 
 const InputLabel: FC<InputLabelProps> = ({

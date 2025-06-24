@@ -4,11 +4,13 @@ import { useDispatch } from "react-redux";
 
 import Modal from "../../../ui/Modal";
 import Button from "../../../ui/buttons/Button";
-import { addTaskData, updateTaskData } from "../store/taskActions";
+import { useAddTaskMutation, useUpdateTaskMutation } from "../hooks/useTasks";
+import { taskActions } from "../store/taskReducer";
 import { AppDispatch } from "../../../types";
 import { Task, TaskImage } from "../types/TaskTypes";
 import images from "../utils/images";
 import InputLabel from "../../../ui/input/InputLabel";
+import { generateTempId } from "../../../utils/storage";
 
 type TaskModalProps = {
     onClose: () => void;
@@ -26,6 +28,8 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
     const [invalidFields, setInvalidFields] = useState<string[]>([]);
 
     const dispatch: AppDispatch = useDispatch();
+    const addTaskMutation = useAddTaskMutation();
+    const updateTaskMutation = useUpdateTaskMutation();
 
     const [scope, animate] = useAnimate();
 
@@ -59,8 +63,8 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
         }
 
         setInvalidFields([]);
-        const updatedTask = {
-            ...task,
+
+        const taskData = {
             title: titleRef.current?.value.trim() || "",
             description: descriptionRef.current?.value.trim() || "",
             deadline: deadlineRef.current?.value.trim() || "",
@@ -68,13 +72,55 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
         };
 
         if (task) {
-            dispatch(updateTaskData({ ...updatedTask, status: task.status! }));
-        } else {
-            dispatch(addTaskData({ ...updatedTask, status: "active" }));
-        }
+            const updatedTask = { ...task, ...taskData };
 
-        onClose();
+            dispatch(
+                taskActions.updateTask({ id: task.id!, task: updatedTask }),
+            );
+
+            updateTaskMutation.mutate(updatedTask, {
+                onSuccess: () => {
+                    onClose();
+                },
+                onError: () => {
+                    dispatch(taskActions.updateTask({ id: task.id!, task }));
+                },
+            });
+        } else {
+            const tempId = generateTempId();
+            const newTask: Task = {
+                ...taskData,
+                id: tempId,
+                status: "active",
+            };
+
+            dispatch(taskActions.createTask({ task: newTask }));
+            addTaskMutation.mutate(
+                { ...taskData, status: "active" },
+                {
+                    onSuccess: (response) => {
+                        const finalTask: Task = {
+                            ...taskData,
+                            id: response.name,
+                            status: "active",
+                        };
+                        dispatch(
+                            taskActions.updateTask({
+                                id: tempId,
+                                task: finalTask,
+                            }),
+                        );
+                        onClose();
+                    },
+                    onError: () => {
+                        dispatch(taskActions.deleteTask({ id: tempId }));
+                    },
+                },
+            );
+        }
     }
+
+    const isLoading = addTaskMutation.isPending || updateTaskMutation.isPending;
 
     return (
         <Modal title={task ? "Edit Task" : "New Task"} onClose={onClose}>
@@ -93,6 +139,7 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
                     defaultValue={task?.title || ""}
                     isInvalid={invalidFields.includes("title")}
                     autoFocus={true}
+                    disabled={isLoading}
                 />
                 <InputLabel
                     id="description"
@@ -102,6 +149,7 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
                     name="description"
                     defaultValue={task?.description || ""}
                     isInvalid={invalidFields.includes("description")}
+                    disabled={isLoading}
                 />
                 <InputLabel
                     id="deadline"
@@ -111,15 +159,20 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
                     name="deadline"
                     defaultValue={task?.deadline || ""}
                     isInvalid={invalidFields.includes("deadline")}
+                    disabled={isLoading}
                 />
 
                 <motion.ul
-                    className={`grid grid-cols-7 gap-2 mt-6 image-list `}
+                    className={`grid grid-cols-7 gap-2 mt-6 image-list ${
+                        isLoading ? "opacity-50 pointer-events-none" : ""
+                    }`}
                 >
                     {images.map((image: TaskImage) => (
                         <motion.li
                             key={image.alt}
-                            onClick={() => handleSelectImage(image)}
+                            onClick={() =>
+                                !isLoading && handleSelectImage(image)
+                            }
                             className={`w-12 h-12 rounded-full border-2 image ${
                                 selectedImage.src === image.src
                                     ? "border-blue-500"
@@ -133,7 +186,11 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
                                 selectedImage.src !== image.src
                                     ? "border-transparent"
                                     : ""
-                            } cursor-pointer hover:scale-105`}
+                            } ${
+                                isLoading
+                                    ? "cursor-not-allowed"
+                                    : "cursor-pointer hover:scale-105"
+                            }`}
                         >
                             <img
                                 src={image.src}
@@ -149,14 +206,22 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
                         type="button"
                         onClick={onClose}
                         className="px-4 py-2 text-gray-700 bg-transparent rounded-md hover:text-gray-500"
+                        disabled={isLoading}
                     >
                         Cancel
                     </Button>
                     <Button
                         type="submit"
-                        className="px-4 py-2 bg-blue-600 text-white"
+                        className="px-4 py-2 bg-blue-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled={isLoading}
                     >
-                        {task ? "Update" : "Add"}
+                        {isLoading
+                            ? task
+                                ? "Updating..."
+                                : "Adding..."
+                            : task
+                            ? "Update"
+                            : "Add"}
                     </Button>
                 </div>
             </form>
