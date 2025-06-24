@@ -1,12 +1,9 @@
+import { CLASSES_PAGE_BODY, CLASSES_PAGE_TITLE } from "../utils/classes";
+
 const DashboardPage = () => {
     return (
-        <div
-            id="dashboard"
-            className="w-full mx-auto mt-8 p-6 bg-white rounded-lg shadow-md"
-        >
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-                Dashboard
-            </h2>
+        <div id="dashboard" className={CLASSES_PAGE_BODY}>
+            <h2 className={CLASSES_PAGE_TITLE}>Dashboard</h2>
         </div>
     );
 };

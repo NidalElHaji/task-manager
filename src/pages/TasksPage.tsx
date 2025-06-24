@@ -12,6 +12,7 @@ import { RootState } from "../types";
 import { filterTaskList } from "../features/tasks/utils/taskUtils";
 import { DROPDOWN_SEARCH_LIST } from "../utils/utils";
 import { useSearchAndFilter } from "../hooks/useSearchAndFilter";
+import { CLASSES_PAGE_BODY, CLASSES_PAGE_TITLE } from "../utils/classes";
 
 const TasksPage = () => {
     const [selectedStatus, setSelectedStatus] = useState<TaskStatus>("active");
@@ -47,14 +48,9 @@ const TasksPage = () => {
                     <TaskModal onClose={handleDoneAddNewTask} />
                 )}
             </AnimatePresence>
-            <div
-                id="tasks"
-                className="w-full mx-auto mt-8 p-6 bg-white rounded-lg shadow-md"
-            >
+            <div id="tasks" className={CLASSES_PAGE_BODY}>
                 <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-                        Tasks
-                    </h2>
+                    <h2 className={CLASSES_PAGE_TITLE}>Tasks</h2>
                     <Button
                         type="button"
                         onClick={handleStartAddNewTask}
