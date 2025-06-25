@@ -1,5 +1,4 @@
 import { FormEvent, useRef, useState } from "react";
-import { stagger, useAnimate } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -10,6 +9,7 @@ import { validateEmail } from "../utils/validation";
 import { useLoginMutation } from "../features/auth/hooks/useAuth";
 import { authActions } from "../features/auth/store/authReducer";
 import { AppDispatch } from "../types";
+import useShakeAnimation from "../hooks/useShakeAnimation";
 
 const LoginPage = () => {
     const emailRef = useRef<HTMLInputElement>(null);
@@ -18,72 +18,44 @@ const LoginPage = () => {
     const [invalidFields, setInvalidFields] = useState<string[]>([]);
     const [errorMessage, setErrorMessage] = useState<string>("");
 
-    const [scope, animate] = useAnimate();
+    const { scope, triggerShake } = useShakeAnimation();
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const loginMutation = useLoginMutation();
-
-    const validateFields = () => {
-        const invalids: string[] = [];
-
-        const email: string = emailRef.current?.value || "";
-        const password: string = passwordRef.current?.value || "";
-
-        if (!email.trim() || !validateEmail(email)) {
-            invalids.push("email");
-        }
-        if (!password.trim()) {
-            invalids.push("password");
-        }
-
-        return invalids;
-    };
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setErrorMessage("");
 
-        const invalids = validateFields();
+        const email = emailRef.current?.value.trim() || "";
+        const password = passwordRef.current?.value.trim() || "";
+
+        const invalids = [];
+        if (!email || !validateEmail(email)) invalids.push("email");
+        if (!password) invalids.push("password");
 
         if (invalids.length > 0) {
             setInvalidFields(invalids);
-            animate(
-                "input, textarea, img",
-                { x: [-10, 0, 10, 0] },
-                { type: "tween", duration: 0.2, delay: stagger(0.05) },
-            );
+            triggerShake("input");
             return;
         }
 
         setInvalidFields([]);
 
-        const credentials = {
-            email: emailRef.current?.value.trim() || "",
-            password: passwordRef.current?.value.trim() || "",
-        };
-
         try {
-            const response = await loginMutation.mutateAsync(credentials);
+            const response = await loginMutation.mutateAsync({
+                email,
+                password,
+            });
 
-            dispatch(
-                authActions.loginSuccess({
-                    user: response.user,
-                    token: response.token,
-                    refreshToken: response.refreshToken,
-                }),
-            );
+            dispatch(authActions.loginSuccess(response));
 
             navigate("/");
         } catch (error) {
-            console.error("Login failed:", error);
+            console.error("Error with the login", error);
 
             setErrorMessage("Invalid email or password. Please try again.");
-
-            animate(
-                "input, textarea",
-                { x: [-10, 0, 10, 0] },
-                { type: "tween", duration: 0.2, delay: stagger(0.05) },
-            );
+            triggerShake("input");
         }
     };
     return (

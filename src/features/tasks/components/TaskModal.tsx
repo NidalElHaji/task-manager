@@ -1,5 +1,5 @@
 import { FC, FormEvent, useRef, useState } from "react";
-import { motion, stagger, useAnimate } from "framer-motion";
+import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 
 import Modal from "../../../ui/Modal";
@@ -11,6 +11,7 @@ import { Task, TaskImage } from "../types/TaskTypes";
 import images from "../utils/images";
 import InputLabel from "../../../ui/input/InputLabel";
 import { generateTempId } from "../../../utils/storage";
+import useShakeAnimation from "../../../hooks/useShakeAnimation";
 
 type TaskModalProps = {
     onClose: () => void;
@@ -30,8 +31,7 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
     const dispatch: AppDispatch = useDispatch();
     const addTaskMutation = useAddTaskMutation();
     const updateTaskMutation = useUpdateTaskMutation();
-
-    const [scope, animate] = useAnimate();
+    const { scope, triggerShake } = useShakeAnimation();
 
     const handleSelectImage = (image: TaskImage) => {
         setSelectedImage(image);
@@ -56,11 +56,7 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
 
         if (invalids.length > 0) {
             setInvalidFields(invalids);
-            animate(
-                "input, textarea, img",
-                { x: [-10, 0, 10, 0] },
-                { type: "tween", duration: 0.2, delay: stagger(0.05) },
-            );
+            triggerShake("input, textarea, img");
             return;
         }
 
@@ -212,11 +208,7 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
                     >
                         Cancel
                     </Button>
-                    <Button
-                        type="submit"
-                        className="px-4 py-2 bg-blue-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-                        disabled={isLoading}
-                    >
+                    <Button type="submit" disabled={isLoading}>
                         {isLoading
                             ? task
                                 ? "Updating..."

@@ -1,6 +1,5 @@
 import { JSX, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { House, ListChecks, LogOut, Menu, X } from "lucide-react";
 
 import NavLinkButton from "../buttons/NavLinkButton";
@@ -19,7 +18,6 @@ const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const dispatch = useDispatch<AppDispatch>();
-    const navigate = useNavigate();
     const logoutMutation = useLogoutMutation();
 
     const toggleSidebar = () => setIsOpen(!isOpen);
@@ -29,10 +27,8 @@ const Sidebar = () => {
             await logoutMutation.mutateAsync();
 
             dispatch(authActions.logout());
-
-            navigate("/login");
         } catch (error) {
-            console.error(error);
+            console.error("Logout failed:", error);
         }
     };
 
