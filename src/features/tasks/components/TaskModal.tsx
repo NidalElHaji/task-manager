@@ -145,7 +145,7 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
                     id="description"
                     label="Description"
                     ref={descriptionRef}
-                    type="text"
+                    type="textarea"
                     name="description"
                     defaultValue={task?.description || ""}
                     isInvalid={invalidFields.includes("description")}

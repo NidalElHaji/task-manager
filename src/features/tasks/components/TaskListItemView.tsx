@@ -13,6 +13,7 @@ import { AppDispatch } from "../../../types";
 import TaskModal from "./TaskModal";
 import Button from "../../../ui/buttons/Button";
 import { Pencil, Trash } from "lucide-react";
+import classes from "../../../utils/classes";
 
 type TaskListItemViewProps = { task: Task };
 
@@ -114,7 +115,7 @@ const TaskListItemView: FC<TaskListItemViewProps> = ({ task }) => {
                         className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-500"
                         disabled={updateTaskMutation.isPending}
                     >
-                        <Pencil />
+                        <Pencil className={classes.icon} />
                     </Button>
                     <Button
                         onClick={handleDelete}
@@ -122,7 +123,7 @@ const TaskListItemView: FC<TaskListItemViewProps> = ({ task }) => {
                         className="px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-500"
                         disabled={deleteTaskMutation.isPending}
                     >
-                        <Trash />
+                        <Trash className={classes.icon} />
                     </Button>
                 </div>
             </header>

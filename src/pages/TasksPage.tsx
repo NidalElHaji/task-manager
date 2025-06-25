@@ -13,7 +13,7 @@ import TaskTabs from "../features/tasks/components/TaskTabs";
 import TaskList from "../features/tasks/components/TaskList";
 import TaskModal from "../features/tasks/components/TaskModal";
 import Button from "../ui/buttons/Button";
-import { CLASSES_PAGE_BODY, CLASSES_PAGE_TITLE } from "../utils/classes";
+import classes from "../utils/classes";
 import SearchBox from "../ui/input/SearchBox";
 import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
@@ -61,9 +61,9 @@ const TasksPage: FC = () => {
             <AnimatePresence>
                 {isModalOpen && <TaskModal onClose={toggleModal} />}
             </AnimatePresence>
-            <div id="tasks" className={CLASSES_PAGE_BODY}>
+            <div id="tasks" className={classes.pageBody}>
                 <div className="flex items-center justify-between mb-6">
-                    <h2 className={CLASSES_PAGE_TITLE}>Tasks</h2>
+                    <h2 className={classes.pageTitle}>Tasks</h2>
                     <Button
                         type="button"
                         onClick={toggleModal}
