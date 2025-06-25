@@ -1,13 +1,13 @@
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../types";
+
 import { initializeAuth } from "../features/auth/store/authActions";
-import { AppDispatch } from "../types";
+import { AppDispatch, RootState } from "../types";
 import LoadingPage from "../pages/LoadingPage";
 
 interface ProtectedRouteProps {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {

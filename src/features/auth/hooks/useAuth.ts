@@ -22,7 +22,11 @@ const transformFirebaseUser = (firebaseUser: FirebaseUser): User => {
 export const useLoginMutation = () => {
     const queryClient = useQueryClient();
 
-    return useMutation<User, Error, LoginCredentials>({
+    return useMutation<
+        { user: User; token: string; refreshToken?: string },
+        Error,
+        LoginCredentials
+    >({
         mutationFn: async (credentials: LoginCredentials) => {
             try {
                 const userCredential = await signInWithEmailAndPassword(
@@ -35,15 +39,19 @@ export const useLoginMutation = () => {
 
                 authStorageUtils.setToken(token);
 
-                return transformFirebaseUser(userCredential.user);
+                return {
+                    user: transformFirebaseUser(userCredential.user),
+                    token: token,
+                    refreshToken: userCredential.user.refreshToken,
+                };
             } catch (error) {
                 console.error("Login failed:", error);
                 throw new Error("Login failed");
             }
         },
-        onSuccess: (user) => {
-            queryClient.setQueryData(["user"], user);
-            authStorageUtils.setUser(user);
+        onSuccess: (data) => {
+            queryClient.setQueryData(["user"], data.user);
+            authStorageUtils.setUser(data.user);
         },
         onError: (error) => {
             console.error("Login failed:", error);

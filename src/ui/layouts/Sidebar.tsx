@@ -1,7 +1,13 @@
 import { JSX, useState } from "react";
-import { House, ListChecks, Menu, X } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { House, ListChecks, LogOut, Menu, X } from "lucide-react";
 
 import NavLinkButton from "../buttons/NavLinkButton";
+import Button from "../buttons/Button";
+import { AppDispatch } from "../../types";
+import { useLogoutMutation } from "../../features/auth/hooks/useAuth";
+import { authActions } from "../../features/auth/store/authReducer";
 
 const NAV_LINKS: readonly { to: string; text: string; icon: JSX.Element }[] =
     Object.freeze([
@@ -12,7 +18,23 @@ const NAV_LINKS: readonly { to: string; text: string; icon: JSX.Element }[] =
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
+    const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+    const logoutMutation = useLogoutMutation();
+
     const toggleSidebar = () => setIsOpen(!isOpen);
+
+    const handleLogout = async () => {
+        try {
+            await logoutMutation.mutateAsync();
+
+            dispatch(authActions.logout());
+
+            navigate("/login");
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <>
@@ -25,9 +47,9 @@ const Sidebar = () => {
             </button>
 
             <aside
-                className={`bg-gray-800 text-white fixed top-0 left-0 z-20 h-full w-64 shadow-md transform transition-transform duration-300 ${
+                className={`bg-gray-800 text-white fixed top-0 left-0 z-20 h-full w-64 shadow-md transform transition-transform duration-300 flex flex-col ${
                     isOpen ? "translate-x-0" : "-translate-x-full"
-                }  md:translate-x-0 md:w-72`}
+                } md:translate-x-0 md:w-72`}
             >
                 <div className="p-4 text-2xl font-bold border-b border-gray-700">
                     <h1>Task Manager</h1>
@@ -46,6 +68,15 @@ const Sidebar = () => {
                         ))}
                     </ul>
                 </nav>
+                <div className="p-4">
+                    <Button
+                        className="w-full flex items-center relative px-4 py-2 rounded-md bg-red-600 hover:bg-red-500 text-white space-x-2"
+                        onClick={handleLogout}
+                    >
+                        <LogOut />
+                        <span>Logout</span>
+                    </Button>
+                </div>
             </aside>
         </>
     );

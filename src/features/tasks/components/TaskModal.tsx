@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from "react";
+import { FC, FormEvent, useRef, useState } from "react";
 import { motion, stagger, useAnimate } from "framer-motion";
 import { useDispatch } from "react-redux";
 
@@ -49,7 +49,7 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
         return invalids;
     };
 
-    function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
+    function handleSubmit(event: FormEvent<HTMLFormElement>): void {
         event.preventDefault();
 
         const invalids = validateFields();

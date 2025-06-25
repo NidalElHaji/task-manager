@@ -5,7 +5,7 @@ import Card from "../ui/Card";
 
 const HomePage = () => {
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-blue-50">
+        <div className="flex flex-col items-center justify-center bg-blue-50">
             <header className="w-full bg-blue-800 text-white py-4 shadow-md">
                 <div className="container mx-auto px-4">
                     <h1 className="text-3xl font-bold">
@@ -64,14 +64,6 @@ const HomePage = () => {
                     </Card.Content>
                 </Card>
             </main>
-
-            <footer className="w-full bg-gray-800 text-white py-4 mt-auto">
-                <div className="container mx-auto px-4 text-center">
-                    <p className="text-sm">
-                        &copy; 2025 My Code Showcase. All rights reserved.
-                    </p>
-                </div>
-            </footer>
         </div>
     );
 };
