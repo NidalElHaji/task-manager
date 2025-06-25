@@ -44,7 +44,7 @@ Ensure you have the following installed:
 
 #### 3. Get Firebase Configuration
 
-1. In Firebase Console, click the **gear icon** (⚙️) next to "Project Overview".
+1. In Firebase Console, click the **gear icon** next to "Project Overview".
 2. Select **"Project settings"**.
 3. Scroll down to the **"Your apps"** section.
 4. If you haven't added a web app:
