@@ -4,17 +4,28 @@ import { Suspense } from "react";
 import MainLayout from "../layouts/MainLayout";
 import ErrorPage from "../pages/ErrorPage";
 import TasksPage from "../pages/TasksPage";
+import LoginPage from "../pages/LoginPage";
 import { tasksLoader } from "../pages/handlers/tasksPage.handler";
 import LoadingPage from "../pages/LoadingPage";
-import RecruitersHomePage from "../pages/RecruitersHomePage";
+import HomePage from "../pages/HomePage";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const router = createBrowserRouter([
     {
+        path: "/login",
+        element: <LoginPage />,
+        errorElement: <ErrorPage />,
+    },
+    {
         path: "/",
-        element: <MainLayout />,
+        element: (
+            <ProtectedRoute>
+                <MainLayout />
+            </ProtectedRoute>
+        ),
         errorElement: <ErrorPage />,
         children: [
-            { index: true, element: <RecruitersHomePage /> },
+            { index: true, element: <HomePage /> },
             {
                 path: "tasks",
                 element: (

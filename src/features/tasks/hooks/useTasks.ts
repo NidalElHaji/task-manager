@@ -8,7 +8,7 @@ import {
 } from "../../../utils/http";
 import { storageUtils } from "../../../utils/storage";
 
-const BASE_URL = `${import.meta.env.VITE_API_URL}tasks`;
+const BASE_URL = `${import.meta.env.VITE_FIREBASE_DATABASE_URL}tasks`;
 
 export const useTasksQuery = () => {
     return useQuery<Task[]>({

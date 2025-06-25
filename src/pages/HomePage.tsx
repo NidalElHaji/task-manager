@@ -3,7 +3,7 @@ import { Briefcase, Code } from "lucide-react";
 import Button from "../ui/buttons/Button";
 import Card from "../ui/Card";
 
-const RecruitersHomePage = () => {
+const HomePage = () => {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-blue-50">
             <header className="w-full bg-blue-800 text-white py-4 shadow-md">
@@ -76,4 +76,4 @@ const RecruitersHomePage = () => {
     );
 };
 
-export default RecruitersHomePage;
+export default HomePage;

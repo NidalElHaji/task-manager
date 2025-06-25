@@ -40,10 +40,12 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
 
     const validateFields = () => {
         const invalids: string[] = [];
+
         if (!titleRef.current?.value.trim()) invalids.push("title");
         if (!descriptionRef.current?.value.trim()) invalids.push("description");
         if (!deadlineRef.current?.value.trim()) invalids.push("deadline");
         if (!selectedImage.src) invalids.push("image");
+
         return invalids;
     };
 
