@@ -81,8 +81,11 @@ export const useLogoutMutation = () => {
 
 export const useRegisterMutation = () => {
     const queryClient = useQueryClient();
-
-    return useMutation<User, Error, LoginCredentials & { name?: string }>({
+    return useMutation<
+        { user: User; token: string; refreshToken?: string },
+        Error,
+        LoginCredentials & { name?: string }
+    >({
         mutationFn: async (userData) => {
             try {
                 const userCredential = await createUserWithEmailAndPassword(
@@ -100,15 +103,19 @@ export const useRegisterMutation = () => {
                 const token = await userCredential.user.getIdToken();
                 authStorageUtils.setToken(token);
 
-                return transformFirebaseUser(userCredential.user);
+                return {
+                    user: transformFirebaseUser(userCredential.user),
+                    token: token,
+                    refreshToken: userCredential.user.refreshToken,
+                };
             } catch (error) {
                 console.error("Registration failed:", error);
                 throw new Error("Registration failed");
             }
         },
-        onSuccess: (user) => {
-            queryClient.setQueryData(["user"], user);
-            authStorageUtils.setUser(user);
+        onSuccess: (data) => {
+            queryClient.setQueryData(["user"], data.user);
+            authStorageUtils.setUser(data.user);
         },
         onError: (error) => {
             console.error("Registration failed:", error);

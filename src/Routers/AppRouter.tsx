@@ -9,11 +9,17 @@ import { tasksLoader } from "../pages/handlers/tasksPage.handler";
 import LoadingPage from "../pages/LoadingPage";
 import HomePage from "../pages/HomePage";
 import ProtectedRoute from "../components/ProtectedRoute";
+import RegisterPage from "../pages/RegisterPage";
 
 const router = createBrowserRouter([
     {
         path: "/login",
         element: <LoginPage />,
+        errorElement: <ErrorPage />,
+    },
+    {
+        path: "/register",
+        element: <RegisterPage />,
         errorElement: <ErrorPage />,
     },
     {
