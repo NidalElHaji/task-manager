@@ -1,5 +1,5 @@
-import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode, FC } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 const List: FC<{ children: ReactNode }> & {
     Item: typeof Item;

@@ -1,6 +1,6 @@
+import { FC, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
-import { FC, ReactNode } from "react";
 
 const Modal: FC<{
     title: string;

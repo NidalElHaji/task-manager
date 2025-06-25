@@ -1,10 +1,10 @@
 import { ChangeEvent, FC } from "react";
+import { Search } from "lucide-react";
 
 import Button from "../buttons/Button";
 import Dropdown from "./Dropdown";
 import Input from "./Input";
 import { DROPDOWN_SEARCH_LIST } from "../../utils/utils";
-import { Search } from "lucide-react";
 import classes from "../../utils/classes";
 
 type SearchBoxProps = {

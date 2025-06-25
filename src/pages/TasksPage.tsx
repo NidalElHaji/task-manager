@@ -8,7 +8,6 @@ import { useSearchAndFilter } from "../hooks/useSearchAndFilter";
 import { useTasksQuery } from "../features/tasks/hooks/useTasks";
 import { taskActions } from "../features/tasks/store/taskReducer";
 import { RootState } from "../types";
-
 import TaskTabs from "../features/tasks/components/TaskTabs";
 import TaskList from "../features/tasks/components/TaskList";
 import TaskModal from "../features/tasks/components/TaskModal";

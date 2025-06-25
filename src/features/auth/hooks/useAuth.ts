@@ -7,9 +7,11 @@ import {
     User as FirebaseUser,
     updateProfile,
 } from "firebase/auth";
+
 import { auth } from "../../../config/firebase";
 import { LoginCredentials, User } from "../types/AuthTypes";
 import { authStorageUtils } from "../utils/authStorage";
+
 const transformFirebaseUser = (firebaseUser: FirebaseUser): User => {
     return {
         id: firebaseUser.uid,
