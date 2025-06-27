@@ -2,8 +2,7 @@ import { JSX, useState } from "react";
 import { useDispatch } from "react-redux";
 import { House, ListChecks, LogOut, Menu, X } from "lucide-react";
 
-import NavLinkButton from "../buttons/NavLinkButton";
-import Button from "../buttons/Button";
+import { Button, NavLinkButton } from "../../../components";
 import { AppDispatch } from "../../../types/storeTypes";
 import { useLogoutMutation } from "../../../features/auth/hooks/useAuth";
 import { authActions } from "../../../features/auth/store/authReducer";

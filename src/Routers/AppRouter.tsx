@@ -1,14 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Suspense } from "react";
 
-import MainLayout from "../components/ui/layouts/MainLayout";
+import { MainLayout, ProtectedRoute } from "../components";
 import ErrorPage from "../pages/ErrorPage";
 import TasksPage from "../pages/TasksPage";
 import LoginPage from "../pages/LoginPage";
 import { tasksLoader } from "../pages/handlers/tasksPage.handler";
 import LoadingPage from "../pages/LoadingPage";
 import HomePage from "../pages/HomePage";
-import ProtectedRoute from "../components/ProtectedRoute";
 import RegisterPage from "../pages/RegisterPage";
 
 const router = createBrowserRouter([

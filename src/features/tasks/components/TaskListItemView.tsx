@@ -12,7 +12,7 @@ import {
 import { taskActions } from "../store/taskReducer";
 import { AppDispatch } from "../../../types/storeTypes";
 import TaskModal from "./TaskModal";
-import Button from "../../../components/ui/buttons/Button";
+import { Button } from "../../../components";
 import classes from "../../../utils/classes";
 
 type TaskListItemViewProps = { task: Task };

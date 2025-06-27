@@ -2,9 +2,9 @@ import { ReactNode, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { initializeAuth } from "../features/auth/store/authActions";
-import { AppDispatch, RootState } from "../types/storeTypes";
-import LoadingPage from "../pages/LoadingPage";
+import { AppDispatch, RootState } from "../../types/storeTypes";
+import { initializeAuth } from "../../features/auth/store/authActions";
+import LoadingPage from "../../pages/LoadingPage";
 
 interface ProtectedRouteProps {
     children: ReactNode;

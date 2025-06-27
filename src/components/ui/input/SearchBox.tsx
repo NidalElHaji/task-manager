@@ -2,8 +2,7 @@ import { ChangeEvent, FC } from "react";
 import { Search } from "lucide-react";
 
 import Button from "../buttons/Button";
-import Dropdown from "./Dropdown";
-import Input from "./Input";
+import { Dropdown, Input } from "../../../components";
 import { DROPDOWN_SEARCH_LIST } from "../../../utils/utils";
 import classes from "../../../utils/classes";
 

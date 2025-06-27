@@ -14,8 +14,7 @@ import TaskModal from "../features/tasks/components/TaskModal";
 import classes from "../utils/classes";
 import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
-import Button from "../components/ui/buttons/Button";
-import SearchBox from "../components/ui/input/SearchBox";
+import { Button, SearchBox } from "../components";
 
 const TasksPage: FC = () => {
     const [selectedStatus, setSelectedStatus] = useState<TaskStatus>("active");
