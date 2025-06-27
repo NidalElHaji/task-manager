@@ -10,7 +10,7 @@ const LoginPage = () => {
                         Login
                     </Card.Title>
                     <Card.Content>
-                        <LoginForm />;
+                        <LoginForm />
                     </Card.Content>
                 </Card.Header>
             </Card>
