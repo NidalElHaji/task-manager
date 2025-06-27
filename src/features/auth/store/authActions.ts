@@ -1,6 +1,6 @@
-import { AppDispatch } from "../../../types";
+import { AppDispatch } from "../../../types/storeTypes";
 import { authStorageUtils } from "../utils/authStorage";
-import { LoginCredentials, User } from "../types/AuthTypes";
+import { LoginCredentials, User } from "../../../types/authTypes";
 import { authActions } from "./authReducer";
 
 export const initializeAuth = () => {

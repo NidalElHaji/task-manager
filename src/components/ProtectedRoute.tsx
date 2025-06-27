@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { initializeAuth } from "../features/auth/store/authActions";
-import { AppDispatch, RootState } from "../types";
+import { AppDispatch, RootState } from "../types/storeTypes";
 import LoadingPage from "../pages/LoadingPage";
 
 interface ProtectedRouteProps {

@@ -2,14 +2,14 @@ import { FormEvent, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 
-import Card from "../ui/Card";
-import InputLabel from "../ui/input/InputLabel";
-import Button from "../ui/buttons/Button";
 import { validateEmail } from "../utils/validation";
 import { useRegisterMutation } from "../features/auth/hooks/useAuth";
 import { authActions } from "../features/auth/store/authReducer";
-import { AppDispatch } from "../types";
-import useShakeAnimation from "../hooks/useShakeAnimation";
+import { AppDispatch } from "../types/storeTypes";
+import { useShakeAnimation } from "../hooks/useShakeAnimation";
+import Card from "../components/ui/Card";
+import InputLabel from "../components/ui/input/InputLabel";
+import Button from "../components/ui/buttons/Button";
 
 const SignInPage = () => {
     const emailRef = useRef<HTMLInputElement>(null);

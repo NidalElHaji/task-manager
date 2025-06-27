@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../../../config/firebase";
-import { LoginCredentials, User } from "../types/AuthTypes";
+import { LoginCredentials, User } from "../../../types/authTypes";
 import { authStorageUtils } from "../utils/authStorage";
 
 const transformFirebaseUser = (firebaseUser: FirebaseUser): User => {

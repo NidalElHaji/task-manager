@@ -1,6 +1,6 @@
-import { AppDispatch } from "../../../types";
+import { AppDispatch } from "../../../types/storeTypes";
 import { generateTempId, storageUtils } from "../../../utils/storage";
-import { Task } from "../types/TaskTypes";
+import { Task } from "../../../types/taskTypes";
 import { taskActions } from "./taskReducer";
 
 export const fetchTasksData = () => {

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { AuthState, User } from "../types/AuthTypes";
+import { AuthState, User } from "../../../types/authTypes";
 import { authStorageUtils } from "../utils/authStorage";
 
 const initialState: AuthState = {
@@ -81,4 +81,4 @@ const authSlice = createSlice({
 });
 
 export const authActions = authSlice.actions;
-export default authSlice.reducer;
+export const authReducer = authSlice.reducer;

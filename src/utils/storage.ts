@@ -1,4 +1,4 @@
-import { Task } from "../features/tasks/types/TaskTypes";
+import { Task } from "../types/taskTypes";
 
 interface PendingSync {
     action: "create" | "update" | "delete";

@@ -2,20 +2,20 @@ import { FC, useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence } from "framer-motion";
 
-import { TaskStatus } from "../features/tasks/types/TaskTypes";
+import { TaskStatus } from "../types/taskTypes";
 import { filterTaskList } from "../features/tasks/utils/taskUtils";
 import { useSearchAndFilter } from "../hooks/useSearchAndFilter";
 import { useTasksQuery } from "../features/tasks/hooks/useTasks";
 import { taskActions } from "../features/tasks/store/taskReducer";
-import { RootState } from "../types";
+import { RootState } from "../types/storeTypes";
 import TaskTabs from "../features/tasks/components/TaskTabs";
 import TaskList from "../features/tasks/components/TaskList";
 import TaskModal from "../features/tasks/components/TaskModal";
-import Button from "../ui/buttons/Button";
 import classes from "../utils/classes";
-import SearchBox from "../ui/input/SearchBox";
 import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
+import Button from "../components/ui/buttons/Button";
+import SearchBox from "../components/ui/input/SearchBox";
 
 const TasksPage: FC = () => {
     const [selectedStatus, setSelectedStatus] = useState<TaskStatus>("active");

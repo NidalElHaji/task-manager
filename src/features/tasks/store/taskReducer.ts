@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { Task } from "../types/TaskTypes";
+import { Task } from "../../../types/taskTypes";
 
 const taskSlice = createSlice({
     name: "task",
@@ -33,4 +33,4 @@ const taskSlice = createSlice({
 });
 
 export const taskActions = taskSlice.actions;
-export default taskSlice.reducer;
+export const taskReducer = taskSlice.reducer;

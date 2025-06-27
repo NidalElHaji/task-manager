@@ -2,16 +2,17 @@ import { FC, FormEvent, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 
-import Modal from "../../../ui/Modal";
-import Button from "../../../ui/buttons/Button";
+import Modal from "../../../components/ui/layouts/Modal";
+
 import { useAddTaskMutation, useUpdateTaskMutation } from "../hooks/useTasks";
 import { taskActions } from "../store/taskReducer";
-import { AppDispatch } from "../../../types";
-import { Task, TaskImage } from "../types/TaskTypes";
+import { AppDispatch } from "../../../types/storeTypes";
+import { Task, TaskImage } from "../../../types/taskTypes";
 import images from "../utils/images";
-import InputLabel from "../../../ui/input/InputLabel";
 import { generateTempId } from "../../../utils/storage";
-import useShakeAnimation from "../../../hooks/useShakeAnimation";
+import { useShakeAnimation } from "../../../hooks/useShakeAnimation";
+import InputLabel from "../../../components/ui/input/InputLabel";
+import Button from "../../../components/ui/buttons/Button";
 
 type TaskModalProps = {
     onClose: () => void;

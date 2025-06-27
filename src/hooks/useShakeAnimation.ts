@@ -1,6 +1,6 @@
 import { useAnimate, stagger } from "framer-motion";
 
-const useShakeAnimation = () => {
+export const useShakeAnimation = () => {
     const [scope, animate] = useAnimate();
 
     const triggerShake = (selector: string) => {
@@ -13,5 +13,3 @@ const useShakeAnimation = () => {
 
     return { scope, triggerShake };
 };
-
-export default useShakeAnimation;

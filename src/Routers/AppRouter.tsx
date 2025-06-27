@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Suspense } from "react";
 
-import MainLayout from "../layouts/MainLayout";
+import MainLayout from "../components/ui/layouts/MainLayout";
 import ErrorPage from "../pages/ErrorPage";
 import TasksPage from "../pages/TasksPage";
 import LoginPage from "../pages/LoginPage";

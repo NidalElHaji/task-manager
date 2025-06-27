@@ -3,16 +3,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { Pencil, Trash } from "lucide-react";
 
-import { Task, TaskStatus } from "../types/TaskTypes";
+import { Task, TaskStatus } from "../../../types/taskTypes";
 import { formatDate } from "../../../utils/utils";
 import {
     useUpdateTaskMutation,
     useDeleteTaskMutation,
 } from "../hooks/useTasks";
 import { taskActions } from "../store/taskReducer";
-import { AppDispatch } from "../../../types";
+import { AppDispatch } from "../../../types/storeTypes";
 import TaskModal from "./TaskModal";
-import Button from "../../../ui/buttons/Button";
+import Button from "../../../components/ui/buttons/Button";
 import classes from "../../../utils/classes";
 
 type TaskListItemViewProps = { task: Task };

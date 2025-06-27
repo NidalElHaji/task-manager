@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { useSelector } from "react-redux";
 
-import Tabs from "../../../ui/lists/Tabs";
-import { Task, TaskStatus } from "../types/TaskTypes";
-import { RootState } from "../../../types";
+import { Task, TaskStatus } from "../../../types/taskTypes";
+import { RootState } from "../../../types/storeTypes";
 import { filterTaskList } from "../utils/taskUtils";
+import Tabs from "../../../components/ui/lists/Tabs";
 
 type TaskTabsProps = {
     selectedStatus: TaskStatus;
