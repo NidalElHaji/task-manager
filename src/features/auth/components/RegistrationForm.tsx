@@ -2,7 +2,7 @@ import { FormEvent, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 
-import { Button, InputLabel } from "@/components";
+import { Button, InputLabel, SentryErrorBoundary } from "@/components";
 import { useShakeAnimation } from "@/hooks/useShakeAnimation";
 import { AppDispatch } from "@/types/storeTypes";
 import { validateEmail } from "@/utils/validation";
@@ -33,11 +33,12 @@ const RegistrationForm = () => {
         const invalids = [];
         if (!email || !validateEmail(email)) invalids.push("email");
         if (!password) invalids.push("password");
-        if (!password2Ref) invalids.push("password2");
-        if (password != password2) invalids.push("password", "password2");
+        if (!password2) invalids.push("password2");
+        if (password !== password2) invalids.push("password", "password2");
 
         if (invalids.length > 0) {
             setInvalidFields(invalids);
+            setErrorMessage("Registration failed. Please try again.");
             triggerShake("input");
             return;
         }
@@ -64,9 +65,11 @@ const RegistrationForm = () => {
     return (
         <>
             {errorMessage && (
-                <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                    {errorMessage}
-                </div>
+                <SentryErrorBoundary>
+                    <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                        {errorMessage}
+                    </div>
+                </SentryErrorBoundary>
             )}
 
             <form onSubmit={handleSubmit} ref={scope}>
@@ -112,7 +115,7 @@ const RegistrationForm = () => {
                     {registerMutation.isPending ? "Signing up..." : "Sign up"}
                 </Button>
                 <p className="text-sm text-gray-600 text-center mt-4">
-                    DO you have an account?{" "}
+                    Do you have an account?{" "}
                     <Link
                         to="/login"
                         className="text-blue-600 hover:text-blue-400"

@@ -6,6 +6,7 @@ import { Button, NavLinkButton } from "@/components";
 import { AppDispatch } from "@/types/storeTypes";
 import { useLogoutMutation } from "@/features/auth/hooks/useAuth";
 import { authActions } from "@/features/auth/store/authSlice";
+import { captureSentryException } from "@/utils/sentry";
 
 const NAV_LINKS: readonly { to: string; text: string; icon: JSX.Element }[] =
     Object.freeze([
@@ -24,10 +25,19 @@ const Sidebar = () => {
     const handleLogout = async () => {
         try {
             await logoutMutation.mutateAsync();
-
             dispatch(authActions.logout());
         } catch (error) {
+            captureSentryException(error as Error, {
+                operation: "userLogout",
+                component: "Sidebar",
+                logoutSource: "sidebarButton",
+                mutationState: logoutMutation.status,
+                timestamp: new Date().toISOString(),
+            });
+
             console.error("Logout failed:", error);
+
+            dispatch(authActions.logout());
         }
     };
 
@@ -67,9 +77,14 @@ const Sidebar = () => {
                     <Button
                         className="w-full flex items-center relative px-4 py-2 rounded-md bg-red-600 hover:bg-red-500 text-white space-x-2"
                         onClick={handleLogout}
+                        disabled={logoutMutation.isPending}
                     >
                         <LogOut />
-                        <span>Logout</span>
+                        <span>
+                            {logoutMutation.isPending
+                                ? "Logging out..."
+                                : "Logout"}
+                        </span>
                     </Button>
                 </div>
             </aside>

@@ -13,6 +13,7 @@ import images from "@/features/tasks/utils/images";
 import { generateTempId } from "@/utils/storage";
 import { useShakeAnimation } from "@/hooks/useShakeAnimation";
 import { Button, Modal, InputLabel } from "@/components";
+import { captureSentryException } from "@/utils/sentry";
 
 type TaskModalProps = {
     onClose: () => void;
@@ -81,8 +82,14 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
                 onSuccess: () => {
                     onClose();
                 },
-                onError: () => {
+                onError: (error) => {
                     dispatch(taskActions.updateTask({ id: task.id!, task }));
+
+                    captureSentryException(error as Error, {
+                        action: "update_task",
+                        taskId: task.id,
+                        taskData: taskData,
+                    });
                 },
             });
         } else {
@@ -111,8 +118,14 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
                         );
                         onClose();
                     },
-                    onError: () => {
+                    onError: (error) => {
                         dispatch(taskActions.deleteTask({ id: tempId }));
+
+                        captureSentryException(error as Error, {
+                            action: "create_task",
+                            tempId: tempId,
+                            taskData: taskData,
+                        });
                     },
                 },
             );
@@ -195,6 +208,12 @@ const TaskModal: FC<TaskModalProps> = ({ onClose, task }) => {
                                 src={image.src}
                                 alt={image.alt}
                                 className="w-full h-full object-cover rounded-full"
+                                onError={() => {
+                                    console.warn(
+                                        "Failed to load task image:",
+                                        image.src,
+                                    );
+                                }}
                             />
                         </motion.li>
                     ))}

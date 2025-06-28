@@ -36,7 +36,9 @@ const router = createBrowserRouter([
                 path: "tasks",
                 element: (
                     <Suspense fallback={<LoadingPage />}>
-                        <TasksPage />
+                        <SentryErrorBoundary>
+                            <TasksPage />
+                        </SentryErrorBoundary>
                     </Suspense>
                 ),
                 errorElement: <ErrorPage />,

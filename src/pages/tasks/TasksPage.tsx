@@ -38,9 +38,20 @@ const TasksPage: FC = () => {
 
     useEffect(() => {
         if (isSuccess && fetchedTasks) {
+            if (
+                loaderData?.tasks &&
+                fetchedTasks.length !== loaderData.tasks.length
+            ) {
+                console.warn("Data sync issue detected", {
+                    fetchedCount: fetchedTasks.length,
+                    cachedCount: loaderData.tasks.length,
+                    source: loaderData.source,
+                });
+            }
+
             dispatch(taskActions.getTasks({ tasks: fetchedTasks }));
         }
-    }, [isSuccess, fetchedTasks, dispatch]);
+    }, [isSuccess, fetchedTasks, dispatch, loaderData]);
 
     const filteredTasksByStatus = useMemo(() => {
         return filterTaskList(taskList);
@@ -62,6 +73,13 @@ const TasksPage: FC = () => {
     }
 
     if (error && (!loaderData?.tasks || loaderData.tasks.length === 0)) {
+        console.error("Tasks page error:", {
+            error,
+            hasLoaderData: !!loaderData?.tasks,
+            loaderDataLength: loaderData?.tasks?.length || 0,
+            taskListLength: taskList.length,
+        });
+
         return <ErrorPage />;
     }
 

@@ -11,7 +11,7 @@ import {
 import { auth } from "@/config/firebase";
 import { LoginCredentials, User } from "@/types/authTypes";
 import { authStorageUtils } from "@/features/auth/utils/authStorage";
-import { throwError } from "@/utils/utils";
+import { captureSentryException } from "@/utils/sentry";
 
 const transformFirebaseUser = (firebaseUser: FirebaseUser): User => {
     return {
@@ -39,7 +39,6 @@ export const useLoginMutation = () => {
                 );
 
                 const token = await userCredential.user.getIdToken();
-
                 authStorageUtils.setToken(token);
 
                 return {
@@ -48,7 +47,14 @@ export const useLoginMutation = () => {
                     refreshToken: userCredential.user.refreshToken,
                 };
             } catch (error) {
-                throw throwError(error as Error);
+                captureSentryException(error as Error, {
+                    operation: "login",
+                    email: credentials.email,
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    errorCode: (error as any)?.code,
+                    timestamp: new Date().toISOString(),
+                });
+                throw error;
             }
         },
         onSuccess: (data) => {
@@ -70,7 +76,12 @@ export const useLogoutMutation = () => {
             try {
                 await signOut(auth);
             } catch (error) {
-                throw throwError(error as Error);
+                captureSentryException(error as Error, {
+                    operation: "logout",
+                    userId: auth.currentUser?.uid,
+                    timestamp: new Date().toISOString(),
+                });
+                throw error;
             }
         },
         onSettled: () => {
@@ -110,7 +121,15 @@ export const useRegisterMutation = () => {
                     refreshToken: userCredential.user.refreshToken,
                 };
             } catch (error) {
-                throw throwError(error as Error);
+                captureSentryException(error as Error, {
+                    operation: "registration",
+                    email: userData.email,
+                    hasDisplayName: Boolean(userData.name),
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    errorCode: (error as any)?.code,
+                    timestamp: new Date().toISOString(),
+                });
+                throw error;
             }
         },
         onSuccess: (data) => {
@@ -144,9 +163,15 @@ export const useUserQuery = () => {
                                 resolve(user);
                             } catch (error) {
                                 authStorageUtils.clearAll();
-                                resolve(null);
 
-                                throw throwError(error as Error);
+                                captureSentryException(error as Error, {
+                                    operation: "getUserToken",
+                                    userId: firebaseUser.uid,
+                                    userEmail: firebaseUser.email,
+                                    timestamp: new Date().toISOString(),
+                                });
+
+                                resolve(null);
                             }
                         } else {
                             authStorageUtils.clearAll();
@@ -167,7 +192,13 @@ export const useRefreshTokenMutation = () => {
         mutationFn: async () => {
             const currentUser = auth.currentUser;
             if (!currentUser) {
-                throw new Error("No authenticated user");
+                const error = new Error("No authenticated user");
+                captureSentryException(error, {
+                    operation: "refreshToken",
+                    reason: "noCurrentUser",
+                    timestamp: new Date().toISOString(),
+                });
+                throw error;
             }
 
             try {
@@ -177,7 +208,15 @@ export const useRefreshTokenMutation = () => {
             } catch (error) {
                 authStorageUtils.clearAll();
 
-                throw throwError(error as Error);
+                captureSentryException(error as Error, {
+                    operation: "refreshToken",
+                    userId: currentUser.uid,
+                    userEmail: currentUser.email,
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    errorCode: (error as any)?.code,
+                    timestamp: new Date().toISOString(),
+                });
+                throw error;
             }
         },
         onError: (error) => {
@@ -210,7 +249,17 @@ export const useAuthStateListener = () => {
                                 authStorageUtils.clearAll();
                                 queryClient.setQueryData(["user"], null);
 
-                                throw throwError(error as Error);
+                                captureSentryException(error as Error, {
+                                    operation: "authStateListener",
+                                    userId: firebaseUser.uid,
+                                    userEmail: firebaseUser.email,
+                                    timestamp: new Date().toISOString(),
+                                });
+
+                                console.error(
+                                    "Auth state listener error:",
+                                    error,
+                                );
                             }
                         } else {
                             authStorageUtils.clearAll();

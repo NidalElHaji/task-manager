@@ -14,6 +14,7 @@ import { AppDispatch } from "@/types/storeTypes";
 import { TaskModal } from "@/features/tasks/components";
 import { Button } from "@/components";
 import classes from "@/utils/classes";
+import { captureSentryException } from "@/utils/sentry";
 
 type TaskListItemViewProps = { task: Task };
 
@@ -56,8 +57,15 @@ const TaskListItemView: FC<TaskListItemViewProps> = ({ task }) => {
             );
 
             updateTaskMutation.mutate(updatedTask, {
-                onError: () => {
+                onError: (error) => {
                     dispatch(taskActions.updateTask({ id: task.id!, task }));
+
+                    captureSentryException(error as Error, {
+                        action: "update_task_status",
+                        taskId: task.id,
+                        newStatus: status,
+                        oldStatus: task.status,
+                    });
                 },
             });
         }
@@ -68,8 +76,13 @@ const TaskListItemView: FC<TaskListItemViewProps> = ({ task }) => {
             dispatch(taskActions.deleteTask({ id: task.id! }));
 
             deleteTaskMutation.mutate(task.id!, {
-                onError: () => {
+                onError: (error) => {
                     dispatch(taskActions.createTask({ task }));
+
+                    captureSentryException(error as Error, {
+                        action: "delete_task",
+                        taskId: task.id,
+                    });
                 },
             });
         }
@@ -93,6 +106,12 @@ const TaskListItemView: FC<TaskListItemViewProps> = ({ task }) => {
                             src={task.image.src}
                             alt={task.image.alt || task.title}
                             className="w-16 h-16 object-contain"
+                            onError={() => {
+                                console.warn(
+                                    "Failed to load task image:",
+                                    task!.image!.src!,
+                                );
+                            }}
                         />
                     ) : (
                         <div className="w-16 h-16 bg-gray-200 rounded-md" />
