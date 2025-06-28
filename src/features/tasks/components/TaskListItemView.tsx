@@ -13,7 +13,7 @@ import { taskActions } from "@/features/tasks/store/taskSlice";
 import { AppDispatch } from "@/types/storeTypes";
 import { TaskModal } from "@/features/tasks/components";
 import { Button } from "@/components";
-import classes from "@/utils/classes";
+import { classes } from "@/utils/classes";
 import { captureSentryException } from "@/utils/sentry";
 
 type TaskListItemViewProps = { task: Task };

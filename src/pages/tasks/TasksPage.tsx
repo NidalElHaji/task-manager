@@ -10,7 +10,7 @@ import { useTasksQuery } from "@/features/tasks/hooks/useTasks";
 import { taskActions } from "@/features/tasks/store/taskSlice";
 import { RootState } from "@/types/storeTypes";
 import { TaskList, TaskModal, TaskTabs } from "@/features/tasks/components";
-import classes from "@/utils/classes";
+import { classes } from "@/utils/classes";
 import LoadingPage from "@/pages/common/LoadingPage";
 import ErrorPage from "@/pages/common/ErrorPage";
 import { Button, SearchBox } from "@/components";

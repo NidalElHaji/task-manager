@@ -1,5 +1,5 @@
 import { Button } from "@/components";
-import classes from "@/utils/classes";
+import { classes } from "@/utils/classes";
 import { Link } from "react-router-dom";
 
 const NotFoundPage = () => {
