@@ -27,7 +27,6 @@ const TasksPage: FC = () => {
     const dispatch = useDispatch();
     const taskList = useSelector((state: RootState) => state.task.taskList);
     const loaderData = useLoaderData() as LoaderData;
-
     const { data: fetchedTasks, isLoading, error, isSuccess } = useTasksQuery();
 
     useEffect(() => {
@@ -68,26 +67,20 @@ const TasksPage: FC = () => {
 
     const toggleModal = () => setIsModalOpen((prev) => !prev);
 
-    if (isLoading && taskList.length === 0) {
-        return <LoadingPage />;
-    }
-
-    if (error && (!loaderData?.tasks || loaderData.tasks.length === 0)) {
-        console.error("Tasks page error:", {
-            error,
-            hasLoaderData: !!loaderData?.tasks,
-            loaderDataLength: loaderData?.tasks?.length || 0,
-            taskListLength: taskList.length,
-        });
-
-        return <ErrorPage />;
-    }
-
     return (
         <>
+            {isLoading && taskList.length === 0 && (
+                <LoadingPage loadText="Fetching task data..." />
+            )}
+
+            {error && (!loaderData?.tasks || loaderData.tasks.length === 0) && (
+                <ErrorPage />
+            )}
+
             <AnimatePresence>
                 {isModalOpen && <TaskModal onClose={toggleModal} />}
             </AnimatePresence>
+
             <div id="tasks" className={classes.pageBody}>
                 <div className="flex items-center justify-between mb-6">
                     <h2 className={classes.pageTitle}>Tasks</h2>
@@ -118,10 +111,12 @@ const TasksPage: FC = () => {
                         searchValue={searchConfig.searchValue}
                     />
                 </div>
+
                 <TaskTabs
                     selectedStatus={selectedStatus}
                     setSelectedStatus={setSelectedStatus}
                 />
+
                 <TaskList
                     selectedStatus={selectedStatus}
                     displayTasks={searchedTasks}

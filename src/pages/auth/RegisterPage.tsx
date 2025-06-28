@@ -7,7 +7,7 @@ const SignInPage = () => {
             <Card className="w-full max-w-md p-6 shadow-xl bg-white rounded-lg">
                 <Card.Header>
                     <Card.Title className="text-3xl font-bold text-center text-gray-800 mb-6">
-                        Login
+                        Sign up
                     </Card.Title>
                     <Card.Content>
                         <RegistrationForm />
