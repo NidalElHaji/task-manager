@@ -9,6 +9,7 @@ import LoadingPage from "@/pages/common/LoadingPage";
 import HomePage from "@/pages/common/HomePage";
 import RegisterPage from "@/pages/auth/RegisterPage";
 import { authLoader } from "@/pages/auth/handler/auth.handler";
+import NotFoundPage from "@/pages/common/NotFoundPage";
 
 const router = createBrowserRouter([
     {
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
                 ),
                 errorElement: <ErrorPage />,
             },
+            { path: "*", element: <NotFoundPage /> },
         ],
     },
 ]);
