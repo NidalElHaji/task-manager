@@ -1,13 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { Task } from "../../../types/taskTypes";
+import { Task } from "@/types/taskTypes";
 import {
     getRequest,
     postRequest,
     putRequest,
     deleteRequest,
-} from "../../../utils/http";
-import { storageUtils } from "../../../utils/storage";
+} from "@/utils/http";
+import { storageUtils } from "@/utils/storage";
 
 const BASE_URL = `${import.meta.env.VITE_FIREBASE_DATABASE_URL}tasks`;
 

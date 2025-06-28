@@ -1,10 +1,10 @@
-import constructingImg from "../../../assets/constructing.png";
-import cookingImg from "../../../assets/cooking.png";
-import familyTimeImg from "../../../assets/family-time.png";
-import playingGuitarImg from "../../../assets/playing-guitar.png";
-import romanticWalkImg from "../../../assets/romantic-walk.png";
-import workingOnComputerImg from "../../../assets/working-on-computer.png";
-import workingOutImg from "../../../assets/working-out.png";
+import constructingImg from "@/assets/constructing.png";
+import cookingImg from "@assets/cooking.png";
+import familyTimeImg from "@assets/family-time.png";
+import playingGuitarImg from "@assets/playing-guitar.png";
+import romanticWalkImg from "@assets/romantic-walk.png";
+import workingOnComputerImg from "@assets/working-on-computer.png";
+import workingOutImg from "@assets/working-out.png";
 
 export default [
     { src: constructingImg, alt: "Person working on some furniture." },

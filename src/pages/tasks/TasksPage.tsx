@@ -2,19 +2,17 @@ import { FC, useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence } from "framer-motion";
 
-import { TaskStatus } from "../types/taskTypes";
-import { filterTaskList } from "../features/tasks/utils/taskUtils";
-import { useSearchAndFilter } from "../hooks/useSearchAndFilter";
-import { useTasksQuery } from "../features/tasks/hooks/useTasks";
-import { taskActions } from "../features/tasks/store/taskReducer";
-import { RootState } from "../types/storeTypes";
-import TaskTabs from "../features/tasks/components/TaskTabs";
-import TaskList from "../features/tasks/components/TaskList";
-import TaskModal from "../features/tasks/components/TaskModal";
-import classes from "../utils/classes";
-import LoadingPage from "./LoadingPage";
-import ErrorPage from "./ErrorPage";
-import { Button, SearchBox } from "../components";
+import { TaskStatus } from "@/types/taskTypes";
+import { filterTaskList } from "@/features/tasks/utils/taskUtils";
+import { useSearchAndFilter } from "@/hooks/useSearchAndFilter";
+import { useTasksQuery } from "@/features/tasks/hooks/useTasks";
+import { taskActions } from "@/features/tasks/store/taskReducer";
+import { RootState } from "@/types/storeTypes";
+import { TaskList, TaskModal, TaskTabs } from "@/features/tasks/components";
+import classes from "@/utils/classes";
+import LoadingPage from "@/pages/common/LoadingPage";
+import ErrorPage from "@/pages/common/ErrorPage";
+import { Button, SearchBox } from "@/components";
 
 const TasksPage: FC = () => {
     const [selectedStatus, setSelectedStatus] = useState<TaskStatus>("active");

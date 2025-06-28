@@ -1,4 +1,4 @@
-import { Task } from "../../../types/taskTypes";
+import { Task } from "@/types/taskTypes";
 
 export const filterTaskList = (taskList: Task[]) => {
     return {

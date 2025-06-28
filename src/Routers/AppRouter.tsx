@@ -1,14 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Suspense } from "react";
 
-import { MainLayout, ProtectedRoute } from "../components";
-import ErrorPage from "../pages/ErrorPage";
-import TasksPage from "../pages/TasksPage";
-import LoginPage from "../pages/LoginPage";
-import { tasksLoader } from "../pages/handlers/tasksPage.handler";
-import LoadingPage from "../pages/LoadingPage";
-import HomePage from "../pages/HomePage";
-import RegisterPage from "../pages/RegisterPage";
+import { MainLayout, ProtectedRoute, SentryErrorBoundary } from "@/components";
+import ErrorPage from "@/pages/common/ErrorPage";
+import TasksPage from "@/pages/tasks/TasksPage";
+import LoginPage from "@/pages/auth/LoginPage";
+import { tasksLoader } from "@/pages/tasks/handlers/tasksPage.handler";
+import LoadingPage from "@/pages/common/LoadingPage";
+import HomePage from "@/pages/common/HomePage";
+import RegisterPage from "@/pages/auth/RegisterPage";
 
 const router = createBrowserRouter([
     {
@@ -47,9 +47,11 @@ const router = createBrowserRouter([
 
 const AppRouter = () => {
     return (
-        <Suspense fallback={<LoadingPage />}>
-            <RouterProvider router={router} />
-        </Suspense>
+        <SentryErrorBoundary>
+            <Suspense fallback={<LoadingPage />}>
+                <RouterProvider router={router} />
+            </Suspense>
+        </SentryErrorBoundary>
     );
 };
 

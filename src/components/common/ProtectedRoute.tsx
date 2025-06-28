@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { AppDispatch, RootState } from "../../types/storeTypes";
 import { initializeAuth } from "../../features/auth/store/authActions";
-import LoadingPage from "../../pages/LoadingPage";
+import LoadingPage from "../../pages/common/LoadingPage";
 
 interface ProtectedRouteProps {
     children: ReactNode;

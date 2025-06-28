@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { Task } from "../../../types/taskTypes";
+import { Task } from "@/types/taskTypes";
 
 const taskSlice = createSlice({
     name: "task",

@@ -1,6 +1,6 @@
 import { FC, RefObject } from "react";
 
-import { Label, Input } from "../../../components";
+import { Label, Input } from "@/components";
 
 type InputLabelProps = {
     label: string;

@@ -1,5 +1,5 @@
-export { default as Card } from "./Card";
-export { default as Header } from "./Header";
-export { default as MainLayout } from "./MainLayout";
-export { default as Modal } from "./Modal";
-export { default as Sidebar } from "./Sidebar";
+export { default as Card } from "@/components/ui/layout/Card";
+export { default as Header } from "@/components/ui/layout/Header";
+export { default as MainLayout } from "@/components/ui/layout/MainLayout";
+export { default as Modal } from "@/components/ui/layout/Modal";
+export { default as Sidebar } from "@/components/ui/layout/Sidebar";

@@ -1,5 +1,6 @@
 import * as Sentry from "@sentry/react";
-import { User } from "../types/authTypes";
+
+import { User } from "@/types/authTypes";
 
 export const useSentryUser = () => {
     const setUser = (user: User) => {

@@ -1,7 +1,7 @@
-import { AppDispatch } from "../../../types/storeTypes";
-import { authStorageUtils } from "../utils/authStorage";
-import { LoginCredentials, User } from "../../../types/authTypes";
-import { authActions } from "./authReducer";
+import { AppDispatch } from "@/types/storeTypes";
+import { authStorageUtils } from "@/features/auth/utils/authStorage";
+import { LoginCredentials, User } from "@/types/authTypes";
+import { authActions } from "@/features/auth/store/authReducer";
 
 export const initializeAuth = () => {
     return async (dispatch: AppDispatch) => {

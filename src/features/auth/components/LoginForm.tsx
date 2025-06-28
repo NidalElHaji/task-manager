@@ -2,12 +2,12 @@ import { FormEvent, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 
-import { Button, InputLabel, SentryErrorBoundary } from "../../../components";
-import { useShakeAnimation } from "../../../hooks/useShakeAnimation";
-import { AppDispatch } from "../../../types/storeTypes";
-import { validateEmail } from "../../../utils/validation";
-import { authActions } from "../store/authReducer";
-import { useLoginMutation } from "../hooks/useAuth";
+import { Button, InputLabel, SentryErrorBoundary } from "@/components";
+import { useShakeAnimation } from "@/hooks/useShakeAnimation";
+import { AppDispatch } from "@/types/storeTypes";
+import { validateEmail } from "@/utils/validation";
+import { authActions } from "@/features/auth/store/authReducer";
+import { useLoginMutation } from "@/features/auth/hooks/useAuth";
 
 const LoginForm = () => {
     const emailRef = useRef<HTMLInputElement>(null);
@@ -59,7 +59,11 @@ const LoginForm = () => {
     return (
         <>
             {errorMessage && (
-                <SentryErrorBoundary>{errorMessage}</SentryErrorBoundary>
+                <SentryErrorBoundary>
+                    <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                        {errorMessage}
+                    </div>
+                </SentryErrorBoundary>
             )}
 
             <form onSubmit={handleSubmit} ref={scope}>

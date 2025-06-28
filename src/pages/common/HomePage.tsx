@@ -1,6 +1,6 @@
 import { Briefcase, Code } from "lucide-react";
 
-import { Card, Button } from "../components";
+import { Card, Button } from "@/components";
 
 const HomePage = () => {
     return (

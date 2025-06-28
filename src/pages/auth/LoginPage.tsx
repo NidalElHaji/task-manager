@@ -1,7 +1,7 @@
-import { Card } from "../components";
-import RegistrationForm from "../features/auth/components/RegistrationForm";
+import { Card } from "@/components";
+import LoginForm from "@/features/auth/components/LoginForm";
 
-const SignInPage = () => {
+const LoginPage = () => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <Card className="w-full max-w-md p-6 shadow-xl bg-white rounded-lg">
@@ -10,7 +10,7 @@ const SignInPage = () => {
                         Login
                     </Card.Title>
                     <Card.Content>
-                        <RegistrationForm />
+                        <LoginForm />
                     </Card.Content>
                 </Card.Header>
             </Card>
@@ -18,4 +18,4 @@ const SignInPage = () => {
     );
 };
 
-export default SignInPage;
+export default LoginPage;

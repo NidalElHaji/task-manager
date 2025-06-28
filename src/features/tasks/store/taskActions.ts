@@ -1,7 +1,7 @@
-import { AppDispatch } from "../../../types/storeTypes";
-import { generateTempId, storageUtils } from "../../../utils/storage";
-import { Task } from "../../../types/taskTypes";
-import { taskActions } from "./taskReducer";
+import { AppDispatch } from "@/types/storeTypes";
+import { generateTempId, storageUtils } from "@/utils/storage";
+import { Task } from "@/types/taskTypes";
+import { taskActions } from "@/features/tasks/store/taskReducer";
 
 export const fetchTasksData = () => {
     return async (dispatch: AppDispatch) => {

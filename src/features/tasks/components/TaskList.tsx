@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-import { Task, TaskStatus } from "../../../types/taskTypes";
-import { List } from "../../../components";
-import TaskListItemView from "./TaskListItemView";
+import { Task, TaskStatus } from "@/types/taskTypes";
+import { List } from "@/components";
+import { TaskListItemView } from "@/features/tasks/components/";
 
 type TaskListProps = { selectedStatus: TaskStatus; displayTasks: Task[] };
 
