@@ -5,10 +5,10 @@ import { MainLayout, ProtectedRoute, SentryErrorBoundary } from "@/components";
 import ErrorPage from "@/pages/common/ErrorPage";
 import TasksPage from "@/pages/tasks/TasksPage";
 import LoginPage from "@/pages/auth/LoginPage";
-import { tasksLoader } from "@/pages/tasks/handlers/tasksPage.handler";
 import LoadingPage from "@/pages/common/LoadingPage";
 import HomePage from "@/pages/common/HomePage";
 import RegisterPage from "@/pages/auth/RegisterPage";
+import { authLoader } from "@/pages/auth/handler/auth.handler";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +28,7 @@ const router = createBrowserRouter([
                 <MainLayout />
             </ProtectedRoute>
         ),
+        loader: authLoader,
         errorElement: <ErrorPage />,
         children: [
             { index: true, element: <HomePage /> },
@@ -38,7 +39,6 @@ const router = createBrowserRouter([
                         <TasksPage />
                     </Suspense>
                 ),
-                loader: tasksLoader,
                 errorElement: <ErrorPage />,
             },
         ],

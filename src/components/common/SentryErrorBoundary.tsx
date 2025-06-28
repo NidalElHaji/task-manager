@@ -1,6 +1,6 @@
 import { ErrorBoundary } from "@sentry/react";
 
-import { Button } from "../../components";
+import { Button } from "@/components";
 
 const SentryErrorBoundary = ({ children }: { children: React.ReactNode }) => {
     return (

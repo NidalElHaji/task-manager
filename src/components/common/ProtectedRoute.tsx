@@ -2,9 +2,9 @@ import { ReactNode, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { AppDispatch, RootState } from "../../types/storeTypes";
-import { initializeAuth } from "../../features/auth/store/authActions";
-import LoadingPage from "../../pages/common/LoadingPage";
+import { AppDispatch, RootState } from "@/types/storeTypes";
+import LoadingPage from "@/pages/common/LoadingPage";
+import { authActions } from "@/features/auth/store/authSlice";
 
 interface ProtectedRouteProps {
     children: ReactNode;
@@ -17,7 +17,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
 
     useEffect(() => {
-        dispatch(initializeAuth());
+        dispatch(authActions.checkAuthStatus());
     }, [dispatch]);
 
     if (isLoading) {

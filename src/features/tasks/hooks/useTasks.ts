@@ -8,6 +8,7 @@ import {
     deleteRequest,
 } from "@/utils/http";
 import { storageUtils } from "@/utils/storage";
+import { throwError } from "@/utils/utils";
 
 const BASE_URL = `${import.meta.env.VITE_FIREBASE_DATABASE_URL}tasks`;
 
@@ -30,6 +31,7 @@ export const useTasksQuery = () => {
                     "API fetch failed, using localStorage data:",
                     error,
                 );
+
                 const localTasks = storageUtils.getTasks();
                 return localTasks;
             }
@@ -54,7 +56,8 @@ export const useAddTaskMutation = () => {
                     task: tempTask as Task,
                     timestamp: Date.now(),
                 });
-                throw error;
+
+                throw throwError(error as Error);
             }
         },
         onSuccess: () => {
@@ -92,7 +95,8 @@ export const useUpdateTaskMutation = () => {
                     task: updatedTask,
                     timestamp: Date.now(),
                 });
-                throw error;
+
+                throw throwError(error as Error);
             }
         },
         onMutate: async (updatedTask) => {
@@ -119,6 +123,7 @@ export const useUpdateTaskMutation = () => {
                 );
                 storageUtils.saveTasks(context.previousTasks);
             }
+
             console.error("Failed to update task:", error);
         },
         onSettled: () => {
@@ -141,7 +146,8 @@ export const useDeleteTaskMutation = () => {
                     taskId: taskId,
                     timestamp: Date.now(),
                 });
-                throw error;
+
+                throw throwError(error as Error);
             }
         },
         onMutate: async (taskId) => {
@@ -168,6 +174,7 @@ export const useDeleteTaskMutation = () => {
                 );
                 storageUtils.saveTasks(context.previousTasks);
             }
+
             console.error("Failed to delete task:", error);
         },
         onSettled: () => {

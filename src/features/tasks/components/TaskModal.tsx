@@ -6,7 +6,7 @@ import {
     useAddTaskMutation,
     useUpdateTaskMutation,
 } from "@/features/tasks/hooks/useTasks";
-import { taskActions } from "@/features/tasks/store/taskReducer";
+import { taskActions } from "@/features/tasks/store/taskSlice";
 import { AppDispatch } from "@/types/storeTypes";
 import { Task, TaskImage } from "@/types/taskTypes";
 import images from "@/features/tasks/utils/images";

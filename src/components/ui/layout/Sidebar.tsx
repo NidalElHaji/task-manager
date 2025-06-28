@@ -5,7 +5,7 @@ import { House, ListChecks, LogOut, Menu, X } from "lucide-react";
 import { Button, NavLinkButton } from "@/components";
 import { AppDispatch } from "@/types/storeTypes";
 import { useLogoutMutation } from "@/features/auth/hooks/useAuth";
-import { authActions } from "@/features/auth/store/authReducer";
+import { authActions } from "@/features/auth/store/authSlice";
 
 const NAV_LINKS: readonly { to: string; text: string; icon: JSX.Element }[] =
     Object.freeze([

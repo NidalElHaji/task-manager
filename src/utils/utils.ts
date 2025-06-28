@@ -9,3 +9,11 @@ export const DROPDOWN_SEARCH_LIST = Object.freeze([
     { label: "Title", value: "title" },
     { label: "Description", value: "description" },
 ]);
+
+export const throwError = (error: Error) => {
+    if (error instanceof Error) {
+        throw new Error(error.message);
+    } else {
+        throw new Error(String(error));
+    }
+};

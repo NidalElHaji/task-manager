@@ -1,12 +1,13 @@
 import { FC, useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLoaderData } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
-import { TaskStatus } from "@/types/taskTypes";
+import { TaskStatus, Task } from "@/types/taskTypes";
 import { filterTaskList } from "@/features/tasks/utils/taskUtils";
 import { useSearchAndFilter } from "@/hooks/useSearchAndFilter";
 import { useTasksQuery } from "@/features/tasks/hooks/useTasks";
-import { taskActions } from "@/features/tasks/store/taskReducer";
+import { taskActions } from "@/features/tasks/store/taskSlice";
 import { RootState } from "@/types/storeTypes";
 import { TaskList, TaskModal, TaskTabs } from "@/features/tasks/components";
 import classes from "@/utils/classes";
@@ -14,14 +15,26 @@ import LoadingPage from "@/pages/common/LoadingPage";
 import ErrorPage from "@/pages/common/ErrorPage";
 import { Button, SearchBox } from "@/components";
 
+interface LoaderData {
+    tasks: Task[];
+    source: "api" | "localStorage";
+}
+
 const TasksPage: FC = () => {
     const [selectedStatus, setSelectedStatus] = useState<TaskStatus>("active");
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const dispatch = useDispatch();
     const taskList = useSelector((state: RootState) => state.task.taskList);
+    const loaderData = useLoaderData() as LoaderData;
 
     const { data: fetchedTasks, isLoading, error, isSuccess } = useTasksQuery();
+
+    useEffect(() => {
+        if (loaderData?.tasks && taskList.length === 0) {
+            dispatch(taskActions.getTasks({ tasks: loaderData.tasks }));
+        }
+    }, [loaderData, taskList.length, dispatch]);
 
     useEffect(() => {
         if (isSuccess && fetchedTasks) {
@@ -44,11 +57,11 @@ const TasksPage: FC = () => {
 
     const toggleModal = () => setIsModalOpen((prev) => !prev);
 
-    if (isLoading) {
+    if (isLoading && taskList.length === 0) {
         return <LoadingPage />;
     }
 
-    if (error) {
+    if (error && (!loaderData?.tasks || loaderData.tasks.length === 0)) {
         return <ErrorPage />;
     }
 
@@ -68,6 +81,13 @@ const TasksPage: FC = () => {
                         Add Task
                     </Button>
                 </div>
+
+                {loaderData?.source === "localStorage" && isLoading && (
+                    <div className="mb-4 p-2 bg-yellow-100 text-yellow-800 rounded">
+                        Using cached data. Syncing with server...
+                    </div>
+                )}
+
                 <div className="w-full flex mx-auto mt-8 pb-6">
                     <SearchBox
                         onDropboxChange={(value) =>

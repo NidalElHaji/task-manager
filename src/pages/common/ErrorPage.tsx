@@ -15,10 +15,10 @@ const ErrorPage = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-red-50">
+        <div className="w-full mt-8 md:p-6 pl-1 p-2 bg-red-50 rounded-lg shadow-md">
             <h1 className="text-3xl font-bold text-red-600 mb-4">Error</h1>
             <p className="text-lg text-red-500 mb-6">{error.message}</p>
-            <div className="space-x-4">
+            <div className="flex justify-end gap-4 mt-4">
                 <button
                     onClick={handleRetry}
                     className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600"

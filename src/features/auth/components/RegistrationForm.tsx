@@ -6,7 +6,7 @@ import { Button, InputLabel } from "@/components";
 import { useShakeAnimation } from "@/hooks/useShakeAnimation";
 import { AppDispatch } from "@/types/storeTypes";
 import { validateEmail } from "@/utils/validation";
-import { authActions } from "@/features/auth/store/authReducer";
+import { authActions } from "@/features/auth/store/authSlice";
 import { useRegisterMutation } from "@/features/auth/hooks/useAuth";
 
 const RegistrationForm = () => {

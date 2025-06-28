@@ -9,7 +9,7 @@ import {
     useUpdateTaskMutation,
     useDeleteTaskMutation,
 } from "@/features/tasks/hooks/useTasks";
-import { taskActions } from "@/features/tasks/store/taskReducer";
+import { taskActions } from "@/features/tasks/store/taskSlice";
 import { AppDispatch } from "@/types/storeTypes";
 import { TaskModal } from "@/features/tasks/components";
 import { Button } from "@/components";

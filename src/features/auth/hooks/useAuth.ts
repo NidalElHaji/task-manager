@@ -8,9 +8,10 @@ import {
     updateProfile,
 } from "firebase/auth";
 
-import { auth } from "../../../config/firebase";
-import { LoginCredentials, User } from "../../../types/authTypes";
-import { authStorageUtils } from "../utils/authStorage";
+import { auth } from "@/config/firebase";
+import { LoginCredentials, User } from "@/types/authTypes";
+import { authStorageUtils } from "@/features/auth/utils/authStorage";
+import { throwError } from "@/utils/utils";
 
 const transformFirebaseUser = (firebaseUser: FirebaseUser): User => {
     return {
@@ -47,8 +48,7 @@ export const useLoginMutation = () => {
                     refreshToken: userCredential.user.refreshToken,
                 };
             } catch (error) {
-                console.error("Login failed:", error);
-                throw new Error("Login failed");
+                throw throwError(error as Error);
             }
         },
         onSuccess: (data) => {
@@ -70,8 +70,7 @@ export const useLogoutMutation = () => {
             try {
                 await signOut(auth);
             } catch (error) {
-                console.error("Logout failed:", error);
-                throw error;
+                throw throwError(error as Error);
             }
         },
         onSettled: () => {
@@ -111,8 +110,7 @@ export const useRegisterMutation = () => {
                     refreshToken: userCredential.user.refreshToken,
                 };
             } catch (error) {
-                console.error("Registration failed:", error);
-                throw new Error("Registration failed");
+                throw throwError(error as Error);
             }
         },
         onSuccess: (data) => {
@@ -145,12 +143,10 @@ export const useUserQuery = () => {
                                 authStorageUtils.setUser(user);
                                 resolve(user);
                             } catch (error) {
-                                console.error(
-                                    "Error getting user token:",
-                                    error,
-                                );
                                 authStorageUtils.clearAll();
                                 resolve(null);
+
+                                throw throwError(error as Error);
                             }
                         } else {
                             authStorageUtils.clearAll();
@@ -180,7 +176,8 @@ export const useRefreshTokenMutation = () => {
                 return token;
             } catch (error) {
                 authStorageUtils.clearAll();
-                throw error;
+
+                throw throwError(error as Error);
             }
         },
         onError: (error) => {
@@ -210,12 +207,10 @@ export const useAuthStateListener = () => {
                                 authStorageUtils.setUser(user);
                                 queryClient.setQueryData(["user"], user);
                             } catch (error) {
-                                console.error(
-                                    "Error in auth state listener:",
-                                    error,
-                                );
                                 authStorageUtils.clearAll();
                                 queryClient.setQueryData(["user"], null);
+
+                                throw throwError(error as Error);
                             }
                         } else {
                             authStorageUtils.clearAll();
