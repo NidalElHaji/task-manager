@@ -13,7 +13,7 @@ import { TaskList, TaskModal, TaskTabs } from "@/features/tasks/components";
 import { classes } from "@/utils/classes";
 import LoadingPage from "@/pages/common/LoadingPage";
 import ErrorPage from "@/pages/common/ErrorPage";
-import { Button, SearchBox } from "@/components";
+import { Button, SearchBox, MessageBox } from "@/components";
 
 interface LoaderData {
     tasks: Task[];
@@ -94,11 +94,11 @@ const TasksPage: FC = () => {
                 </div>
 
                 {loaderData?.source === "localStorage" && isLoading && (
-                    <div className="mb-4 p-2 bg-yellow-100 text-yellow-800 rounded">
-                        Using cached data. Syncing with server...
-                    </div>
+                    <MessageBox
+                        type="info"
+                        message="Using cached data. Syncing with server..."
+                    />
                 )}
-
                 <div className="w-full flex mx-auto mt-8 pb-6">
                     <SearchBox
                         onDropboxChange={(value) =>

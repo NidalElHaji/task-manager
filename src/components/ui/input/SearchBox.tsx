@@ -31,7 +31,7 @@ const SearchBox: FC<SearchBoxProps> = ({
     return (
         <div className="flex items-center w-full">
             <Dropdown
-                className="w-34 px-2.5 py-1 md:py-2 text-sm font-medium text-gray-700 bg-blue-100 border border-blue-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-34 px-2.5 py-1 md:py-2 text-sm font-medium text-blue-700 bg-blue-100 border border-blue-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                 options={DROPDOWN_SEARCH_LIST}
                 onChange={handleDropdownChange}
                 aria-label="Select search criteria"
